@@ -10,7 +10,6 @@ interface MovieModalProps {
 const URL_IMG = "https://image.tmdb.org/t/p/w500/";
 
 export default function MovieModal({ movie, onClose }: MovieModalProps) {
-export default function MovieModal({ movie, onClose }: MovieModalProps) {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
