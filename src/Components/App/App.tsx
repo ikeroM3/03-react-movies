@@ -3,7 +3,6 @@ import { useState } from "react";
 import SearchBar from "../SearchBar/SearchBar.tsx";
 import toast, { Toaster } from "react-hot-toast";
 import type { Movie } from "../../types/movie.ts";
-import { useEffect } from "react";
 import { fetchMovies } from "../../services/movieService.ts";
 import MovieGrid from "../MovieGrid/MovieGrid.tsx";
 import Loader from "../Loader/Loader.tsx";
