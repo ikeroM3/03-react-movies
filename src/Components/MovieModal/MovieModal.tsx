@@ -1,7 +1,7 @@
 import css from "./MovieModal.module.css";
 import { createPortal } from "react-dom";
 import { type Movie } from "../../types/movie";
-import { useEffect, type KeyboardEvent } from "react";
+import { useEffect } from "react";
 interface MovieModalProps {
   movie: Movie;
   onClose: () => void;
@@ -9,7 +9,8 @@ interface MovieModalProps {
 
 const URL_IMG = "https://image.tmdb.org/t/p/w500/";
 
-export default function MovieModal({ movie, onClose }): MovieModalProps {
+export default function MovieModal({ movie, onClose }: MovieModalProps) {
+export default function MovieModal({ movie, onClose }: MovieModalProps) {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
