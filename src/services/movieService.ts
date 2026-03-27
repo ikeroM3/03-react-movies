@@ -7,13 +7,20 @@ interface FetchMoviesResponse {
 
 const token = import.meta.env.VITE_TMDB_TOKEN;
 
-export const fetchMovies = async (query: string): Promise<Movie[]> => {
+export const fetchMovies = async (
+  query: string,
+  page: number = 1,
+): Promise<Movie[]> => {
   const options = {
     params: {
       query: query,
+      include_adult: false,
+      language: "en-US",
+      page: page,
     },
     headers: {
       Authorization: `Bearer ${token}`,
+      Accept: "application/json",
     },
   };
   const response = await axios.get<FetchMoviesResponse>(
