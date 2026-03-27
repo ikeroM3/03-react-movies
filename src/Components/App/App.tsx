@@ -1,6 +1,4 @@
 import { useState } from "react";
-
-import SearchBar from "../SearchBar/SearchBar.tsx";
 import toast, { Toaster } from "react-hot-toast";
 import type { Movie } from "../../types/movie.ts";
 import { fetchMovies } from "../../services/movieService.ts";
@@ -8,6 +6,8 @@ import MovieGrid from "../MovieGrid/MovieGrid.tsx";
 import Loader from "../Loader/Loader.tsx";
 import ErrorMessage from "../ErrorMessage/ErrorMessage.tsx";
 import MovieModal from "../MovieModal/MovieModal.tsx";
+
+import SearchBar from "../SearchBar/SearchBar.tsx";
 export default function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(false);
