@@ -1,28 +1,56 @@
 import { useState } from "react";
+
 import SearchBar from "../SearchBar/SearchBar.tsx";
 import toast, { Toaster } from "react-hot-toast";
 import type { Movie } from "../../types/movie.ts";
 import { useEffect } from "react";
-
-import { GetArticlesRes } from "../../services/movieService.ts";
-
+import { fetchMovies } from "../../services/movieService.ts";
+import MovieGrid from "../MovieGrid/MovieGrid.tsx";
+import Loader from "../Loader/Loader.tsx";
+import ErrorMessage from "../ErrorMessage/ErrorMessage.tsx";
+import MovieModal from "../MovieModal/MovieModal.tsx";
 export default function App() {
-  const [movie, setMovie] = useState<Movie[]>([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
-  const fetchMovies = async (searchTopic: string) => {
+  const handleCloseModal = () => {
+    setSelectedMovie(null);
+  };
+
+  const handleSearch = async (query: string) => {
     try {
-      const setMovie = await GetArticlesRes(searchTopic);
-      setMovie(setMovie);
+      setMovies([]);
+      setError(false);
+      setLoading(true);
+
+      const data = await fetchMovies(query);
+      if (data.length === 0) {
+        setError(true);
+        return;
+      }
+      setMovies(data);
     } catch {
-      console.log(Error);
+      setError(true);
+      toast.error("There was an error, please try again...");
+    } finally {
+      setLoading(false);
     }
   };
+
   return (
     <>
-      <SearchBar onSubmit={fetchMovies} />
+      <SearchBar onSubmit={handleSearch} />
+      {error && <ErrorMessage />}
+      {loading && <Loader />}
+      {movies.length > 0 && !loading && !error && (
+        <MovieGrid movies={movies} onSelect={setSelectedMovie} />
+      )}
+      {selectedMovie && (
+        <MovieModal movie={selectedMovie} onClose={handleCloseModal} />
+      )}
       <Toaster />
     </>
   );
 }
-
-export default App;
